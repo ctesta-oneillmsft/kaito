@@ -64,7 +64,7 @@ As you will see here in our workspace, Synapse brings all of our data into a sin
     The Synapse workspace portal resource contains links to configure your workspace, manage access through Access control (IAM), firewalls, managed identities, and private endpoint connections, and view metrics. It also contains important information about your Synapse Analytics environment, such as:
 
     1. The **Primary ADLS Gen2 account URL (1)**, which identifies the primary data lake storage account.
-    2. The **SQL endpoint** and **SQL on-demand endpoint (2)**, which are used to integrate with external tools, such as SQL Server Management Studio (SSMS), Azure Data Studio, and Power BI.
+    2. The **Dedicated SQL endpoint** and **Serverless SQL endpoint (2)**, which are used to integrate with external tools, such as SQL Server Management Studio (SSMS), Azure Data Studio, and Power BI.
     3. The **Workspace web URL (3)**, a direct link to Synapse Studio for the workspace.
     4. Available resources, such as **SQL pools** and **Apache Spark pools (4)**.
 
@@ -76,9 +76,9 @@ As you will see here in our workspace, Synapse brings all of our data into a sin
 
     ![SQL pool.](media/sql-pool.png "SQL pool")
 
-    The SQL pool refers to the enterprise data warehousing features formerly provided by SQL Data Warehouse. It represents a collection of analytic resources that are provisioned when using Synapse SQL, vs. on-demand, provided by SQL serverless. The size of SQL pool is determined by Data Warehousing Units (DWU).
+    The dedicated SQL pool refers to the enterprise data warehousing features formerly provided by SQL Data Warehouse. It represents a collection of analytic resources that are provisioned vs. serverless SQL pool which is an on demand resource. The size of the dedicated SQL pool is determined by Data Warehousing Units (DWU).
 
-    You can access the SQL pool in the portal, as shown here, or from within Synapse Studio, as we'll show you in a bit. When you access SQL pool in the portal, you have additional configurations and controls vs. what you find in Synapse Studio. Here are some of the common features you'll access through the portal:
+    You can access the dedicated SQL pool in the portal, as shown here, or from within Synapse Studio, as we'll show you in a bit. When you access a dedicated SQL pool in the portal, you have additional configurations and controls vs. what you find in Synapse Studio. Here are some of the common features you'll access through the portal:
 
     1. At the top of the window, we see **controls (1)** to pause, scale, restore, set a new restore point, and delete the pool.
     2. Below, **Transparent data encryption (2)** is prominently displayed, letting us quickly see whether it is enabled to encrypt our databases, backups, and logs.
@@ -86,7 +86,7 @@ As you will see here in our workspace, Synapse brings all of our data into a sin
     4. At the bottom of the Overview blade, we see metrics showing the **Data Warehousing Units (DWU) usage** and **Active and queued queries (4)**, allowing us to filter within different time ranges.
     5. The left-hand menu includes some of these options, as well. It is here where you find the **Access control (IAM) (5)** settings to control access to the SQL pool, granted to users and services.
 
-4. Go back to the Synapse Workspace overview blade in the portal, then open the **Spark pool**.
+4. Go back to the Synapse Workspace overview blade in the portal, then open the **Apache Spark pool**.
 
     ![The Spark pool link is highlighted.](media/spark-pool-link.png "Spark pool")
 
@@ -131,7 +131,7 @@ As you will see here in our workspace, Synapse brings all of our data into a sin
 
     ![The data hub is highlighted.](media/data-hub.png "Data hub")
 
-    The Data hub is where you access your provisioned SQL pool databases and SQL serverless databases in your workspace, as well as external data sources, such as storage accounts and other linked services.
+    The Data hub is where you access your dedicated and serverless SQL pool databases in your workspace, as well as external data sources, such as storage accounts and other linked services.
 
 2. Under the **Workspace (2)** tab of the Data hub (1), expand the **SQLPool01 (3)** SQL pool underneath **Databases**.
 
@@ -187,7 +187,7 @@ As you will see here in our workspace, Synapse brings all of our data into a sin
 
     The Develop hub in our sample environment contains examples of the following artifacts:
 
-    1. **SQL scripts** contains T-SQL scripts that you publish to your workspace. Within the scripts, you can execute commands against any of the provisioned SQL pools or on-demand SQL serverless pools to which you have access.
+    1. **SQL scripts** contains T-SQL scripts that you publish to your workspace. Within the scripts, you can execute commands against any of the dedicated SQL pools or serverless SQL pools to which you have access.
     2. **Notebooks** contains Synapse Spark notebooks used for data engineering and data science tasks. When you execute a notebook, you select a Spark pool as its compute target.
     3. **Data flows** are powerful data transformation workflows that use the power of Apache Spark, but are authored using a code-free GUI.
     4. **Power BI** reports can be embedded here, giving you access to the advanced visualizations they provide without ever leaving the Synapse workspace.
@@ -253,7 +253,7 @@ As you will see here in our workspace, Synapse brings all of our data into a sin
 
     ![The categories are highlighted.](media/manage-categories.png "Manage categories")
 
-    1. **SQL pools** lists the provisioned SQL pools and on-demand SQL serverless pools for the workspace. You can can add new pools or hover over a SQL pool to **pause** or **scale** it. You should pause a SQL pool when it's not being used in order to save costs.
+    1. **SQL pools** lists the dedicated SQL pools and the serverless SQL pools for the workspace. You can can add new pools or hover over a dedicated SQL pool to **pause** or **scale** it. You should pause a dedicated SQL pool when it's not being used in order to save costs.
     2. **Apache Spark pools** lets you manage your Spark pools by configuring the auto-pause and auto-scale settings. You can provision a new Apache Spark pool from this blade.
     3. **Linked services** enables you to manage connections to external resources. Here you can see linked services for our data lake storage account, Azure Key Vault, Power BI, and Synapse Analytics. **Task**: Select **+ New** to show how many types of linked services you can add.
     4. **Triggers** provides you a central location to create or remove pipeline triggers. Alternatively, you can add triggers from the pipeline.
@@ -303,7 +303,7 @@ Synapse Analytics enables you to ingest data from multiple data sources through 
 
     ![The sink tab is selected and its contents displayed as described.](media/pipeline-email-analytics-sink.png "Sink")
 
-6. The **Linked service** is the Azure Synapse Analytics SQL pool, and the **Table** is `EmailAnalytics` **(1)**. The Copy data activity in the pipeline uses the connection details in this dataset to copy data from the CSV data source into the SQL pool. Select **Preview data (2)**.
+6. The **Linked service** is the Azure Synapse Analytics dedicated SQL pool, and the **Table** is `EmailAnalytics` **(1)**. The Copy data activity in the pipeline uses the connection details in this dataset to copy data from the CSV data source into the SQL pool. Select **Preview data (2)**.
 
     ![The EmailAnalytics Synapse Analytics data set is displayed.](media/emailanalytics-dataset.png "EmailAnalytics")
 
@@ -315,7 +315,7 @@ Synapse Analytics enables you to ingest data from multiple data sources through 
 
     ![The close button is highlighted.](media/emailanalytics-close.png "Close")
 
-8. Select the **Mapping** tab. This is where you configure the mapping between the source and sink datasets. The **Import schemas** button attempts to infer the schema for your datasets if they are based on unstructured or semi-structured data sources, like CSV or JSON files. It also reads the schema from structured data sources, like Synapse Analytics SQL pools. You also have the option to manually create your schema mapping by clicking on **+ New mapping** or by modifying the data types.
+8. Select the **Mapping** tab. This is where you configure the mapping between the source and sink datasets. The **Import schemas** button attempts to infer the schema for your datasets if they are based on unstructured or semi-structured data sources, like CSV or JSON files. It also reads the schema from structured data sources, like Synapse Analytics dedicated SQL pools. You also have the option to manually create your schema mapping by clicking on **+ New mapping** or by modifying the data types.
 
     ![The mapping tab contents are displayed.](media/pipeline-email-analytics-mapping.png "Mapping")
 
@@ -331,9 +331,9 @@ Synapse Analytics enables you to ingest data from multiple data sources through 
 
     ![The pipeline is displayed.](media/pipeline-salesdbmigration.png "SalesDBMigration pipeline")
 
-    Here is another example of a data movement orchestration pipeline that helps us combine external data sources into our warehouse. In this case, we load data from an Oracle sales database into an Azyre Synapse SQL pool table.
+    Here is another example of a data movement orchestration pipeline that helps us combine external data sources into our warehouse. In this case, we load data from an Oracle sales database into an Azure Synapse dedicated SQL pool table.
 
-11. Select the **SAP HANA TO ADLS** pipeline. This pipeline copies data from a financial SAP HANA data source into the SQL pool.
+11. Select the **SAP HANA TO ADLS** pipeline. This pipeline copies data from a financial SAP HANA data source into the dedicated SQL pool.
 
 12. Select the **+** button at the top of the **Orchestrate** blade, then select **Pipeline** to create a new pipeline.
 
@@ -365,11 +365,11 @@ Synapse Analytics enables you to ingest data from multiple data sources through 
 
     ![The performance level slider is displayed.](media/sql-pool-scale.png "Scale")
 
-    You can scale out or back compute by adjusting the number of Data Warehouse Units (DWUs) assigned to your SQL pool. This adjusts the loading and query performance linearly as you add more units.
+    You can scale out or back compute by adjusting the number of Data Warehouse Units (DWUs) assigned to your dedicated SQL pool. This adjusts the loading and query performance linearly as you add more units.
 
-    To perform a scale operation, SQL pool first kills all incoming queries and then rolls back transactions to ensure a consistent state. Scaling only occurs once the transaction rollback is complete.
+    To perform a scale operation, dedicated SQL pool first kills all incoming queries and then rolls back transactions to ensure a consistent state. Scaling only occurs once the transaction rollback is complete.
 
-    You can scale SQL compute at any time by using this slider. You can also programmatically adjust the Data Warehouse Units, enabling scenarios where you automatically scale your pool based on a schedule or other factors.
+    You can scale dedicated SQL pool compute at any time by using this slider. You can also programmatically adjust the Data Warehouse Units, enabling scenarios where you automatically scale your pool based on a schedule or other factors.
 
 4. Cancel the Scale dialog, then select **Apache Spark pools (1)** in the Manage hub left-hand menu. Hover over **SparkPool01** and select the **auto-scale settings** button **(2)**.
 
@@ -387,7 +387,7 @@ Synapse Analytics enables you to ingest data from multiple data sources through 
 
     ![The default storage linked service is highlighted.](media/default-storage.png "Default storage")
 
-    When you provision a new Azure Synapse Analytics workspace, you define the default storage Azure Data Lake Storage Gen2 account. Data Lake Storage Gen2 makes Azure Storage the foundation for building enterprise data lakes on Azure. Designed from the start to service multiple petabytes of information while sustaining hundreds of gigabits of throughput, Data Lake Storage Gen2 allows you to easily manage massive amounts of data.
+    When you provision a new Synapse workspace, you define the default storage Azure Data Lake Storage Gen2 account. Data Lake Storage Gen2 makes Azure Storage the foundation for building enterprise data lakes on Azure. Designed from the start to service multiple petabytes of information while sustaining hundreds of gigabits of throughput, Data Lake Storage Gen2 allows you to easily manage massive amounts of data.
 
     Its hierarchical namespace organizes files into a hierarchy of directories for efficient access and more granular security, down to the file-level.
 
